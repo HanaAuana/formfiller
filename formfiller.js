@@ -1,4 +1,8 @@
 var identifyField = function(sel){
+  hide = sel.className.indexOf('hide');
+  if (hide !== -1){
+    return ["hide"]
+  }
   div = document.evaluate('div', sel, null).iterateNext();
   multi = document.evaluate('fieldset/div', sel).iterateNext();
   if(multi){
@@ -199,111 +203,113 @@ var identifyField = function(sel){
 var fillFields = function(field){
   type = field[0];
   switch(type){
+    case "hide":
+    break;
     case "text":
-    fieldID = field[2];
-    fillFieldByID(fieldID, 'Wufoo Test');
+      fieldID = field[2];
+      fillFieldByID(fieldID, 'Wufoo Test');
     break;
     case "number":
-    fieldID = field[2];
-    fillFieldByID(fieldID, 42);
+      fieldID = field[2];
+      fillFieldByID(fieldID, 42);
     break;
     case "para":
-    fieldID = field[2];
-    fillFieldByID(fieldID, 'Wufoo Test');
+      fieldID = field[2];
+      fillFieldByID(fieldID, 'Wufoo Test');
     break;
     case "check":
-    fieldID = field[2][0];
-    val = field[3][0];
-    document.getElementById(fieldID).checked = true;
-    fillFieldByID(fieldID, val);
+      fieldID = field[2][0];
+      val = field[3][0];
+      document.getElementById(fieldID).checked = true;
+      fillFieldByID(fieldID, val);
     break;
     case "radio":
-    fieldID = field[3][0];
-    val = field[4][0];
-    document.getElementById(fieldID).checked = true;
-    fillFieldByID(fieldID, val);
+      fieldID = field[3][0];
+      val = field[4][0];
+      document.getElementById(fieldID).checked = true;
+      fillFieldByID(fieldID, val);
     break;
     case "drop":
-    fieldID = field[2];
-    if(field[3].length === 1){
-      val = field[3][0];
-    }
-    else{
-      val = field[3][1];
-    }
-    fillFieldByID(fieldID, val);
+      fieldID = field[2];
+      if(field[3].length === 1){
+        val = field[3][0];
+      }
+      else{
+        val = field[3][1];
+      }
+      fillFieldByID(fieldID, val);
     break;
     case "name":
-    fieldID_f = field[2];
-    fieldID_l = field[3];
-    fillFieldByID(fieldID_f, 'Wufoo');
-    fillFieldByID(fieldID_l, 'Test');
+      fieldID_f = field[2];
+      fieldID_l = field[3];
+      fillFieldByID(fieldID_f, 'Wufoo');
+      fillFieldByID(fieldID_l, 'Test');
     break;
     case "file":
     break;
     case "addr":
-    fieldID_st1 = field[2][0];
-    fieldID_st2 = field[2][1];
-    fieldID_city = field[2][2];
-    fieldID_state = field[2][3];
-    fieldID_zip = field[2][4];
-    fieldID_country = field[2][5];
-    fillFieldByID(fieldID_st1, '101 Lytton Ave');
-    fillFieldByID(fieldID_st2, '');
-    fillFieldByID(fieldID_city, 'Palo Alto');
-    fillFieldByID(fieldID_state, 'CA');
-    fillFieldByID(fieldID_zip, 94301);
-    fillFieldByID(fieldID_country, 'United States');
+      fieldID_st1 = field[2][0];
+      fieldID_st2 = field[2][1];
+      fieldID_city = field[2][2];
+      fieldID_state = field[2][3];
+      fieldID_zip = field[2][4];
+      fieldID_country = field[2][5];
+      fillFieldByID(fieldID_st1, '101 Lytton Ave');
+      fillFieldByID(fieldID_st2, '');
+      fillFieldByID(fieldID_city, 'Palo Alto');
+      fillFieldByID(fieldID_state, 'CA');
+      fillFieldByID(fieldID_zip, 94301);
+      fillFieldByID(fieldID_country, 'United States');
     break;
     case "date":
-    fieldID_y = field[3][2];
-    fieldID_m = field[3][0];
-    fieldID_d = field[3][1];
-    fillFieldByID(fieldID_y, '2014');
-    fillFieldByID(fieldID_m, '06');
-    fillFieldByID(fieldID_d, '09');
+      fieldID_y = field[3][2];
+      fieldID_m = field[3][0];
+      fieldID_d = field[3][1];
+      fillFieldByID(fieldID_y, '2014');
+      fillFieldByID(fieldID_m, '06');
+      fillFieldByID(fieldID_d, '09');
     break;
     case "email":
-    fieldID = field[2];
-    fillFieldByID(fieldID, 'test@wufoo.com');
+      fieldID = field[2];
+      fillFieldByID(fieldID, 'test@wufoo.com');
     break;
     case "time":
-    fieldID_hh = field[3][2];
-    fieldID_mm = field[3][1];
-    fieldID_ss = field[3][0];
-    fillFieldByID(fieldID_hh, '01');
-    fillFieldByID(fieldID_mm, '02');
-    fillFieldByID(fieldID_ss, '03');
+      fieldID_hh = field[3][2];
+      fieldID_mm = field[3][1];
+      fieldID_ss = field[3][0];
+      fillFieldByID(fieldID_hh, '01');
+      fillFieldByID(fieldID_mm, '02');
+      fillFieldByID(fieldID_ss, '03');
     break;
     case "phone":
-    fieldID_area = field[3][0];
-    fieldID_pre = field[3][1];
-    fieldID_suf = field[3][2];
-    fillFieldByID(fieldID_area, '808');
-    fillFieldByID(fieldID_pre, '867');
-    fillFieldByID(fieldID_suf, '5309');
+      fieldID_area = field[3][0];
+      fieldID_pre = field[3][1];
+      fieldID_suf = field[3][2];
+      fillFieldByID(fieldID_area, '808');
+      fillFieldByID(fieldID_pre, '867');
+      fillFieldByID(fieldID_suf, '5309');
     break;
     case "website":
-    fieldID = field[2];
-    fillFieldByID(fieldID, 'https://wufoo.com');
+      fieldID = field[2];
+      fillFieldByID(fieldID, 'https://wufoo.com');
     break;
     case "price":
-    fieldID = field[2];
-    fillFieldByID(fieldID, '42');
+      fieldID = field[2];
+      fillFieldByID(fieldID, '42');
     break;
     case "likert":
-    rows = field[3];
-    cols = field[2].length;
-    for(var i = 0; i < rows.length; i ++){
-      fieldID = field[4][i*cols];
-      val = field[2][0];
-      document.getElementById(fieldID).checked = true;
-      fillFieldByID(fieldID, val);
-    }
+      rows = field[3];
+      cols = field[2].length;
+      for(var i = 0; i < rows.length; i ++){
+        fieldID = field[4][i*cols];
+        val = field[2][0];
+        document.getElementById(fieldID).checked = true;
+        fillFieldByID(fieldID, val);
+      }
     break;
     case "rating":
-    fieldID = field[2];
-    fillFieldByID(fieldID, 5);
+      fieldID = field[2];
+      fillFieldByID(fieldID, 5);
     break;
     default:
     break;
@@ -315,7 +321,8 @@ var fillFieldByID = function(elemID, value){
 };
 
 var scrapeAndFill = function(){
-  var fields = document.evaluate('//ul/li', document, null);
+  var wufooForm = document.evaluate('//form[contains(@class, "wufoo")]', document).iterateNext();
+  var fields = document.evaluate('//ul/li', wufooForm);
 
   var sel = fields.iterateNext();
   var identifiedFields = [];
