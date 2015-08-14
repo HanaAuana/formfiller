@@ -3,6 +3,22 @@ var identifyField = function(sel){
   if (hide !== -1){
     return ["hide"]
   }
+  total = sel.className.indexOf('total');
+  if (total !== -1){
+    return ["total"]
+  }
+  section = sel.className.indexOf('section');
+  if (section !== -1){
+    return ["section"]
+  }
+  pagingContext = sel.className.indexOf('paging-context');
+  if (pagingContext !== -1){
+    return ["paging-context"]
+  }
+  buttons = sel.className.indexOf('buttons');
+  if (buttons !== -1){
+    return ["buttons"]
+  }
   div = document.evaluate('div', sel, null).iterateNext();
   multi = document.evaluate('fieldset/div', sel).iterateNext();
   if(multi){
@@ -205,6 +221,14 @@ var fillFields = function(field){
   switch(type){
     case "hide":
     break;
+    case "total":
+    break;
+    case "section":
+    break;
+    case "buttons":
+    break;
+    case "paging-context":
+    break;
     case "text":
       fieldID = field[2];
       fillFieldByID(fieldID, 'Wufoo Test');
@@ -328,7 +352,15 @@ var scrapeAndFill = function(){
   var identifiedFields = [];
   while(sel){
     var fieldID = document.evaluate('@id', sel, null).iterateNext();
-    if(fieldID){
+    var isPaging = sel.className.indexOf('paging-context');
+    var total = sel.className.indexOf('total');
+    if(total !== -1){
+      sel = fields.iterateNext();
+    }
+    else if(isPaging !== -1){
+      sel = fields.iterateNext();
+    }
+    else if(fieldID){
       fieldID = fieldID.textContent;
       identified = identifyField(sel);
       identifiedFields.push(identified);
