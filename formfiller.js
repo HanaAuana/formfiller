@@ -128,6 +128,12 @@ var identifyField = function(sel){
       number_title = document.evaluate('label/text()', sel).iterateNext().textContent;
       return ["number", number_title, number];
     }
+    intl_phone = document.evaluate('input[contains(@type, "tel")]/@id', div).iterateNext();
+    if (intl_phone){
+      intl_phone = intl_phone.textContent;
+      intl_phone_title = document.evaluate('label/text()', sel).iterateNext().textContent;
+      return ["intl_phone", intl_phone_title, intl_phone];
+    }
     text = document.evaluate('input/@id', div).iterateNext().textContent;
     if(text){
       label = document.evaluate('label/text()', sel).iterateNext().textContent;
@@ -232,6 +238,10 @@ var fillFields = function(field){
     case "text":
       fieldID = field[2];
       fillFieldByID(fieldID, 'Wufoo Test');
+    break;
+    case "intl_phone":
+      fieldID = field[2];
+      fillFieldByID(fieldID, '8088675309');
     break;
     case "number":
       fieldID = field[2];
