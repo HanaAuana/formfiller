@@ -19,10 +19,10 @@ var identifyField = function(sel){
   if (buttons !== -1){
     return ["buttons"]
   }
-  div = document.evaluate('div', sel, null).iterateNext();
-  multi = document.evaluate('fieldset/div', sel).iterateNext();
+  div = document.evaluate('div', sel, null, XPathResult.ANY_TYPE, null).iterateNext();
+  multi = document.evaluate('fieldset/div', sel, null, XPathResult.ANY_TYPE, null).iterateNext();
   if(multi){
-    checks = document.evaluate('*/input[@type="checkbox"]/@id', multi);
+    checks = document.evaluate('*/input[@type="checkbox"]/@id', multi, null, XPathResult.ANY_TYPE, null);
     checks_temp = checks.iterateNext();
     if(checks_temp){
       checks_list = [checks_temp.textContent];
@@ -31,7 +31,7 @@ var identifyField = function(sel){
         checks_list.push(next_label.textContent);
         next_label = checks.iterateNext();
       }
-      check_labels = document.evaluate('*/input[@type="checkbox"]/@value', multi);
+      check_labels = document.evaluate('*/input[@type="checkbox"]/@value', multi, null, XPathResult.ANY_TYPE, null);
       labels_temp = check_labels.iterateNext();
       labels_list = [labels_temp.textContent];
       next_label = check_labels.iterateNext();
@@ -39,10 +39,10 @@ var identifyField = function(sel){
         labels_list.push(next_label.textContent);
         next_label = check_labels.iterateNext();
       }
-      check_title = document.evaluate('fieldset/legend/text()', sel).iterateNext().textContent;
+      check_title = document.evaluate('fieldset/legend/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["check", check_title, checks_list, labels_list];
     }
-    radio_temp = document.evaluate('*/input[@type="radio"]/@id', multi);
+    radio_temp = document.evaluate('*/input[@type="radio"]/@id', multi, null, XPathResult.ANY_TYPE, null);
     radio = radio_temp.iterateNext();
     if(radio){
       radio_subs = [radio.textContent];
@@ -52,113 +52,113 @@ var identifyField = function(sel){
         next_sub = radio_temp.iterateNext();
       }
 
-      radio_title = document.evaluate('fieldset/legend/text()', sel).iterateNext().textContent;
-      radio_labels = document.evaluate('*/input[@type="radio"]/@value', multi);
+      radio_title = document.evaluate('fieldset/legend/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+      radio_labels = document.evaluate('*/input[@type="radio"]/@value', multi, null, XPathResult.ANY_TYPE, null);
       radio_list = [];
       radio_temp = radio_labels.iterateNext();
       while(radio_temp){
         radio_list.push(radio_temp.textContent);
         radio_temp = radio_labels.iterateNext();
       }
-      radio = document.evaluate('*/input[@type="radio"]/@name', multi).iterateNext().textContent;
+      radio = document.evaluate('*/input[@type="radio"]/@name', multi, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["radio", radio_title, radio, radio_subs, radio_list];
     }
     rating = multi.className.indexOf('rating');
     if (rating !== -1){
-      rating_title = document.evaluate('fieldset/legend/text()', sel).iterateNext().textContent;
-      rating = document.evaluate('input/@id', multi).iterateNext().textContent;
+      rating_title = document.evaluate('fieldset/legend/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+      rating = document.evaluate('input/@id', multi, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["rating", rating_title, rating];
     }
   }
   else if(div){
-    file_up = document.evaluate('input[@type="file"]/@id', div, null).iterateNext();
+    file_up = document.evaluate('input[@type="file"]/@id', div, null, XPathResult.ANY_TYPE, null).iterateNext();
     if(file_up){
       file_up = file_up.textContent;
-      file_title = document.evaluate('label/text()', sel).iterateNext().textContent;
+      file_title = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["file", file_title, file_up];
     }
-    email = document.evaluate('input[@type="email"]/@id', div).iterateNext();
+    email = document.evaluate('input[@type="email"]/@id', div, null, XPathResult.ANY_TYPE, null).iterateNext();
     if(email){
       email = email.textContent;
-      email_title = document.evaluate('label/text()', sel).iterateNext().textContent;
+      email_title = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["email", email_title, email];
     }
-    website = document.evaluate('input[@type="url"]/@id', div).iterateNext();
+    website = document.evaluate('input[@type="url"]/@id', div, null, XPathResult.ANY_TYPE, null).iterateNext();
     if (website){
       website = website.textContent;
-      website_title = document.evaluate('label/text()', sel).iterateNext().textContent;
+      website_title = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["website", website_title, website];
     }
-    addr = document.evaluate('span[contains(@class, "addr1")]', div).iterateNext();
+    addr = document.evaluate('span[contains(@class, "addr1")]', div, null, XPathResult.ANY_TYPE, null).iterateNext();
     if(addr){
-      addr_label = document.evaluate('label/text()', sel).iterateNext().textContent;
+      addr_label = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       addr_subs = [];
-      addr_temp = document.evaluate('span/input/@name', div);
+      addr_temp = document.evaluate('span/input/@name', div, null, XPathResult.ANY_TYPE, null);
       next_sub = addr_temp.iterateNext();
       while(next_sub){
         addr_subs.push(next_sub.textContent);
         next_sub = addr_temp.iterateNext();
       }
-      addr_country = document.evaluate('span[contains(@class, "country")]/select/@id', div).iterateNext().textContent;
+      addr_country = document.evaluate('span[contains(@class, "country")]/select/@id', div, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       addr_subs.push(addr_country);
       return ["addr", addr_label, addr_subs];
     }
-    drop = document.evaluate('select', div).iterateNext();
+    drop = document.evaluate('select', div, null, XPathResult.ANY_TYPE, null).iterateNext();
     if (drop){
-      drop_title = document.evaluate('label/text()', sel).iterateNext().textContent;
+      drop_title = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       drop_labels = [];
-      drop_temp = document.evaluate('option/@value', drop);
+      drop_temp = document.evaluate('option/@value', drop, null, XPathResult.ANY_TYPE, null);
       next_label = drop_temp.iterateNext();
       while(next_label){
         drop_labels.push(next_label.textContent);
         next_label = drop_temp.iterateNext();
       }
-      drop = document.evaluate('@id', drop).iterateNext().textContent;
+      drop = document.evaluate('@id', drop, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["drop", drop_title, drop, drop_labels];
     }
-    paragraph = document.evaluate('textarea/@id', div).iterateNext();
+    paragraph = document.evaluate('textarea/@id', div, null, XPathResult.ANY_TYPE, null).iterateNext();
     if(paragraph){
       paragraph = paragraph.textContent;
-      label = document.evaluate('label/text()', sel).iterateNext().textContent;
+      label = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["para", label, paragraph];
     }
-    number = document.evaluate('input[contains(@class, "nospin")]/@id', div).iterateNext();
+    number = document.evaluate('input[contains(@class, "nospin")]/@id', div, null, XPathResult.ANY_TYPE, null).iterateNext();
     if (number){
       number = number.textContent;
-      number_title = document.evaluate('label/text()', sel).iterateNext().textContent;
+      number_title = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["number", number_title, number];
     }
-    intl_phone = document.evaluate('input[contains(@type, "tel")]/@id', div).iterateNext();
+    intl_phone = document.evaluate('input[contains(@type, "tel")]/@id', div, null, XPathResult.ANY_TYPE, null).iterateNext();
     if (intl_phone){
       intl_phone = intl_phone.textContent;
-      intl_phone_title = document.evaluate('label/text()', sel).iterateNext().textContent;
+      intl_phone_title = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["intl_phone", intl_phone_title, intl_phone];
     }
-    text = document.evaluate('input/@id', div).iterateNext().textContent;
+    text = document.evaluate('input/@id', div, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
     if(text){
-      label = document.evaluate('label/text()', sel).iterateNext().textContent;
+      label = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["text", label, text];
     }
   }
   else{
     likert = sel.className.indexOf('likert');
     if (likert !== -1){
-      likert_label = document.evaluate('table/caption/text()', sel).iterateNext().textContent;
-      likert_cols = document.evaluate('table/thead/tr/td', sel);
+      likert_label = document.evaluate('table/caption/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+      likert_cols = document.evaluate('table/thead/tr/td', sel, null, XPathResult.ANY_TYPE, null);
       cols_list = [];
       cols_temp = likert_cols.iterateNext();
       while(cols_temp){
         cols_list.push(cols_temp.textContent);
         cols_temp = likert_cols.iterateNext();
       }
-      likert_rows = document.evaluate('table/tbody/tr/th/label/text()', sel);
+      likert_rows = document.evaluate('table/tbody/tr/th/label/text()', sel, null, XPathResult.ANY_TYPE, null);
       rows_list = [];
       rows_temp = likert_rows.iterateNext();
       while(rows_temp){
         rows_list.push(rows_temp.textContent);
         rows_temp = likert_rows.iterateNext();
       }
-      likert_rows_id = document.evaluate('table/tbody/tr/td/input/@id', sel);
+      likert_rows_id = document.evaluate('table/tbody/tr/td/input/@id', sel, null, XPathResult.ANY_TYPE, null);
       rows_id_list = [];
       rows_id_temp = likert_rows_id.iterateNext();
       while(rows_id_temp){
@@ -169,54 +169,54 @@ var identifyField = function(sel){
     }
     date = sel.className.indexOf('date');
     if(date !== -1){
-      date_title = document.evaluate('label/text()', sel, null).iterateNext().textContent;
+      date_title = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       date_subs = [];
-      date_temp = document.evaluate('span/input/@id', sel, null);
+      date_temp = document.evaluate('span/input/@id', sel, null, XPathResult.ANY_TYPE, null);
       next_sub = date_temp.iterateNext();
       while(next_sub){
         date_subs.push(next_sub.textContent);
         next_sub = date_temp.iterateNext();
       }
-      date = document.evaluate('label/@for', sel, null).iterateNext().textContent;
+      date = document.evaluate('label/@for', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["date", date_title, date, date_subs];
     }
     time = sel.className.indexOf('time');
     if(time !== -1){
-      time_title = document.evaluate('label/text()', sel).iterateNext().textContent;
-      time_sub = document.evaluate('span/input/@id', sel);
+      time_title = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+      time_sub = document.evaluate('span/input/@id', sel, null, XPathResult.ANY_TYPE, null);
       time_subs = [];
       next_sub = time_sub.iterateNext();
       while(next_sub){
         time_subs.push(next_sub.textContent);
         next_sub = time_sub.iterateNext();
       }
-      time = document.evaluate('label/@for', sel).iterateNext().textContent;
+      time = document.evaluate('label/@for', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["time", time_title, time, time_subs];
     }
     phone = sel.className.indexOf('phone');
     if(phone !== -1){
-      phone_title = document.evaluate('label/text()', sel).iterateNext().textContent;
-      phone_sub = document.evaluate('span/input/@id', sel);
+      phone_title = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+      phone_sub = document.evaluate('span/input/@id', sel, null, XPathResult.ANY_TYPE, null);
       phone_subs = [];
       next_sub = phone_sub.iterateNext();
       while(next_sub){
         phone_subs.push(next_sub.textContent);
         next_sub = phone_sub.iterateNext();
       }
-      phone = document.evaluate('label/@for', sel).iterateNext().textContent;
+      phone = document.evaluate('label/@for', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["phone", phone_title, phone,  phone_subs];
     }
-    price = document.evaluate('span/input[contains(@class, "currency")]', sel).iterateNext();
+    price = document.evaluate('span/input[contains(@class, "currency")]', sel, null, XPathResult.ANY_TYPE, null).iterateNext();
     if (price){
-      price_title = document.evaluate('label/text()', sel).iterateNext().textContent;
-      price = document.evaluate('span/input[contains(@class, "nospin")]/@id', sel).iterateNext().textContent;
+      price_title = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+      price = document.evaluate('span/input[contains(@class, "nospin")]/@id', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["price", price_title, price];
     }
-    name = document.evaluate('span/input[contains(@class, "fn") or contains(@class, "ln")]', sel).iterateNext();
+    name = document.evaluate('span/input[contains(@class, "fn") or contains(@class, "ln")]', sel, null, XPathResult.ANY_TYPE, null).iterateNext();
     if(name){
-      name_title = document.evaluate('label/text()', sel).iterateNext().textContent;
-      f_name = document.evaluate('span/input[contains(@class, "fn")]/@id', sel).iterateNext().textContent;
-      l_name = document.evaluate('span/input[contains(@class, "ln")]/@id', sel).iterateNext().textContent;
+      name_title = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+      f_name = document.evaluate('span/input[contains(@class, "fn")]/@id', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+      l_name = document.evaluate('span/input[contains(@class, "ln")]/@id', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["name", name_title, f_name, l_name];
     }
   }  
@@ -355,13 +355,13 @@ var fillFieldByID = function(elemID, value){
 };
 
 var scrapeAndFill = function(){
-  var wufooForm = document.evaluate('//form[contains(@class, "wufoo")]', document).iterateNext();
-  var fields = document.evaluate('//ul/li', wufooForm);
+  var wufooForm = document.evaluate('//form[contains(@class, "wufoo")]', document, null, XPathResult.ANY_TYPE, null).iterateNext();
+  var fields = document.evaluate('//ul/li', wufooForm, null, XPathResult.ANY_TYPE, null);
 
   var sel = fields.iterateNext();
   var identifiedFields = [];
   while(sel){
-    var fieldID = document.evaluate('@id', sel, null).iterateNext();
+    var fieldID = document.evaluate('@id', sel, null, XPathResult.ANY_TYPE, null).iterateNext();
     var isPaging = sel.className.indexOf('paging-context');
     var total = sel.className.indexOf('total');
     if(total !== -1){
