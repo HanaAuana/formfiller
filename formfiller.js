@@ -134,8 +134,9 @@ var identifyField = function(sel){
       intl_phone_title = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["intl_phone", intl_phone_title, intl_phone];
     }
-    text = document.evaluate('input/@id', div, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
+    text = document.evaluate('input/@id', div, null, XPathResult.ANY_TYPE, null).iterateNext();
     if(text){
+      text = text.textContent;
       label = document.evaluate('label/text()', sel, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
       return ["text", label, text];
     }
